@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang='en' ng-app>
+  <head>
+   <title>Book Shopping Cart</title>
+
+  <script src="../js/angular10.js"></script>
+  <script>
+    function CartControler($scope) {
+    const defaultBooks = [
+      {title: 'Absolute Java',    
+          qty: 1, price: 114.95},
+      {title: 'Pro HTML5',        
+          qty: 1, price: 27.95},
+      {title: 'Head First HTML5', 
+          qty: 1, price: 27.89}
+      ];
+      const book_key = "bubencik_cart";
+      $scope.books = JSON.parse(localStorage.getItem(book_key)) || defaultBooks;
+
+      $scope.saveBooks = function() {
+        console.log("Saving to Local Storage...");
+        localStorage.setItem(book_key, JSON.stringify($scope.books));
+      }
+
+      $scope.removeBook = function(index) {
+        $scope.books.splice(index, 1);
+      }
+      $scope.addBook = function() {
+        $scope.books.push(
+          {
+            title: "New Book",
+            qty: 1,
+            price: 10.99
+          });
+      }
+
+      $scope.totalCost = 0;
+      $scope.updateTotalCost = function() {
+        console.log("getting total cost...");
+        $scope.totalCost = $scope.books.reduce(function(total, book) {
+          return total + (book.price * book.qty);
+        }, 0);
+      }
+
+      $scope.count = 0;
+      $scope.updateBookCount = function() {
+          console.log("updateBookCount...", $scope.books);
+          $scope.count = $scope.books.length;
+          $scope.updateTotalCost();
+      }
+      
+      $scope.$watch('books', function() {
+          $scope.updateBookCount();
+      }, true)
+    }
+  </script>
+  <link rel="stylesheet" href="../css/main.css">
+  </head>
+
+  <body ng-controller="CartControler" ng-init="updateBookCount()">
+
+    <table>
+      <caption><b>My Books</b></caption>
+      <thead>
+        <tr>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>UnitPrice</th>
+            <th>$UnitPrice</th>
+            <th>Line Total</th>
+            <th>Total {{totalCost | currency}}</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="book in books">
+        <tr>
+            <td>
+              <input ng-model="book.title">
+            </td>
+            <td>
+              <input ng-model="book.qty" size="2">
+            </td>
+            <td>
+              <input ng-model="book.price" size="3">
+            </td>
+            <td>{{book.price | currency}}</td>
+            <td>{{book.price * book.qty | currency}}</td>
+            <td>
+                <button ng-click="removeBook($index)">
+                    Remove
+                </button>
+            </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="3">
+          <button ng-click="addBook()">
+            New
+          </button>
+        </td>
+        <td colspan="3">
+          <button ng-click="saveBooks()">
+            Save
+          </button>
+        </td>
+      </tfoot>
+    </table>
+
+  </body>
+</html>
+
+

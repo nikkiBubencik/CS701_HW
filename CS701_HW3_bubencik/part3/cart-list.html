@@ -1,0 +1,57 @@
+<table>
+  <caption><b>My Books</b></caption>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Qty</th>
+      <th>UnitPrice</th>
+      <th>$UnitPrice</th>
+      <th>Line Total</th>
+      <th>Total {{$ctrl.totalCost | currency}}</th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="book in $ctrl.books">
+    <tr>
+      <td>
+        <input ng-model="book.title">
+      </td>
+      <td>
+        <input ng-model="book.qty" size="2">
+      </td>
+      <td>
+        <input ng-model="book.price" size="3">
+      </td>
+      <td>{{book.price | currency}}</td>
+      <td>{{book.price * book.qty | currency}}</td>
+      <td>
+        <button ng-click="$ctrl.removeBook($index)">
+          Remove
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        <button ng-click="$ctrl.addBook()">
+          New
+        </button>
+      </td>
+      <td>
+        <button ng-click="$ctrl.undo()" ng-disabled="!$ctrl.undoMoves.length">
+          Undo
+        </button>
+      </td>
+      <td>
+        <button ng-click="$ctrl.redo()" ng-disabled="!$ctrl.redoMoves.length">
+          Redo
+        </button>
+      </td>
+        <td colspan="3">
+          <button ng-click="$ctrl.saveBooks()">
+            Save
+          </button>
+        </td>
+      </tr>
+  </tfoot>
+</table>
