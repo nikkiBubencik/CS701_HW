@@ -23,7 +23,7 @@ Each assignment is organized in its own folder with a corresponding `README.md` 
 - **Part 2**: Same functionality using AngularJS components.
 - **Part 3**: Undo/Redo feature for adding/removing books.
 
-### [Homework 4 – Angular with TypeScript](./CS701-HW4-bubencik/)
+### [Homework 4 – Angular with TypeScript](./CS701_HW4_bubencik/)
 - **Shopping Cart**: Rebuilt using Angular + TypeScript.
 - **Custom Pipe**: `tokenize` pipe splits strings using a given delimiter.
 
